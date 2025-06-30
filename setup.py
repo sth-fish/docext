@@ -8,11 +8,11 @@ with open("requirements.txt") as f:
 
 setup(
     name="docext",
-    version="0.1.13",
+    version="0.1.14",
     author="Souvik Mandal",
     author_email="souvik@nanonets.com",
     description="Onprem information extraction from documents",
-    long_description=open("README.md", encoding='utf-8').read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/nanonets/docext",
     packages=find_packages(include=["docext", "docext.*"]),
