@@ -32,6 +32,7 @@ class VLLMServer:
         self.url = f"http://{self.host}:{self.port}/v1/models"
         self.vllm_start_timeout = vllm_start_timeout
         self.dtype = dtype
+        self.api_key = os.getenv("API_KEY", "EMPTY")
         assert self.dtype in [
             "bfloat16",
             "float16",
@@ -74,10 +75,11 @@ class VLLMServer:
     def wait_for_server(self, timeout: int = 300):
         """Wait until the vLLM server is ready."""
         logger.info("Waiting for vLLM server to be ready...")
+        headers = {"Authorization": f"Bearer {self.api_key}"}
         start_time = time.time()
         while time.time() - start_time < timeout:
             try:
-                response = requests.get(self.url)
+                response = requests.get(self.url, headers=headers)
                 if response.status_code == 200:
                     logger.info(
                         f"vLLM server started on {self.host}:{self.port} with PID: {self.server_process.pid if self.server_process else None}",
