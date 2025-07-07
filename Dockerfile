@@ -2,11 +2,14 @@ FROM vllm/vllm-openai:v0.8.2 AS dev
 
 # Install Python 3.11
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends python3.11 python3.11-venv python3-pip python3.11-dev && \
+    apt-get install -y --no-install-recommends python3.11 python3.11-venv python3-pip python3.11-dev poppler-utils && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Ensure Python 3.11 is default
 RUN ln -sf /usr/bin/python3.11 /usr/bin/python
+
+ENV CUDA_HOME=/usr/local/cuda
+ENV TORCH_CUDA_ARCH_LIST="8.9"
 
 ENV GRADIO_SERVER_PORT=7860
 ENV GRADIO_SERVER_NAME="0.0.0.0"
@@ -30,7 +33,7 @@ COPY docext /app/docext
 RUN pip install --no-cache-dir -e .
 
 # Install flash-attn separately
-RUN pip install --no-cache-dir flash-attn --no-build-isolation
+RUN pip install flash-attn==2.5.5 --no-build-isolation --no-cache-dir
 
 # Set working directory and entrypoint
 WORKDIR /app/
