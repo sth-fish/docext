@@ -253,7 +253,7 @@ def gradio_app(
 
         logger.info(f"Launching gradio app on port {gradio_port}")
         demo.launch(
-            auth=("admin", "admin"),
+            auth=(os.getenv("GRADIO_AUTH_USER", "admin"), os.getenv("GRADIO_AUTH_PASSWORD", "admin")),
             share=not share,
             server_name="0.0.0.0",
             server_port=gradio_port,
