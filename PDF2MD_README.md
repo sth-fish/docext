@@ -57,7 +57,7 @@ python -m docext.app.app --model_name hosted_vllm/nanonets/Nanonets-OCR-s
 python -m docext.app.app --model_name hosted_vllm/nanonets/Nanonets-OCR-s --max_img_size 1024 --concurrency_limit 16 # `--help` for more options
 ```
 
-The interface will be available at `http://localhost:7860` with default credentials: (You can change the port by using `--ui_port` flag)
+The interface will be available at `http://localhost:7860` with default credentials: (You can change the port by using `--server_port` flag)
 
 - Username: `admin`
 - Password: `admin`
@@ -74,8 +74,7 @@ def convert_pdf_to_markdown(
     client_url: str,
     username: str,
     password: str,
-    file_paths: list[str],
-    model_name: str = "hosted_vllm/nanonets/Nanonets-OCR-s"
+    file_paths: list[str]
 ):
     """
     Convert PDF/images to markdown using the API
@@ -85,7 +84,6 @@ def convert_pdf_to_markdown(
         username: Authentication username
         password: Authentication password
         file_paths: List of file paths to convert
-        model_name: Model to use for conversion
 
     Returns:
         str: Converted markdown content
